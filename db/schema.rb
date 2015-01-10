@@ -11,12 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110124504) do
+ActiveRecord::Schema.define(version: 20150110140830) do
 
   create_table "oauth_logins", force: :cascade do |t|
     t.string   "type",       limit: 255
     t.integer  "user_id",    limit: 4
     t.string   "uid",        limit: 255
+    t.string   "token",      limit: 255
+    t.string   "secret",     limit: 255
+    t.boolean  "expires",    limit: 1
+    t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
