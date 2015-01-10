@@ -1,0 +1,2 @@
+class TwitterLogin < OauthLogin
+end
