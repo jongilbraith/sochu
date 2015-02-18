@@ -1,0 +1,14 @@
+production:
+  twitter:
+    api_key:
+    api_secret:
+
+development:
+  twitter:
+    api_key:
+    api_secret:
+
+test:
+  twitter:
+    api_key:
+    api_secret:
