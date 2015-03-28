@@ -5,8 +5,8 @@ production:
 
 development:
   twitter:
-    api_key:
-    api_secret:
+    api_key: YUKiLI1sqRgGLaxSAsoCT7MCM
+    api_secret: wDddYTjSeUWzmWC9Chh3WpilFtaBKjYTS29SBTyRhC3O2wnwvy
 
 test:
   twitter:
