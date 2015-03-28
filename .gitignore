@@ -12,5 +12,6 @@
 !/log/.keep
 /tmp
 
-# Ignore config files
-/config/*.yml
+# Ignore environment files
+.env*
+
