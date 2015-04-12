@@ -1,8 +1,8 @@
-<h1>Home</h1>
-
-<% if logged_in? %>
-  <p>Logged in as <%= current_user.name %></p>
-  <p><%= link_to 'Log out', signout_path %>?</p>
-<% else %>
-  <p>Would you like to <%= link_to 'log in with Twitter', '/auth/twitter' %>?</p>
-<% end %>
+<div class="l-home">
+  <% if logged_in? %>
+    <h2>Hello <%= current_user.name %></h2>
+  <% else %>
+    <h2>Welcome to Sochu</h2>
+    <p><%= link_to 'Sign into your Twitter Account', '/auth/twitter' %> to get started.</p>
+  <% end %>
+</div>

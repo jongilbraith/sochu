@@ -1,0 +1,29 @@
+body {
+  background-color: $background-colour;
+  color: $body-text-colour;
+}
+
+h1 {
+  margin: 10px 0 20px 0;
+}
+
+h2 {
+  margin: 5px 0 10px 0;
+}
+
+p {
+  margin: 5px 0 10px 0;
+}
+
+.l-header {
+  background-color: $header-background-colour;
+}
+
+.l-header__logo {
+  padding: 10px 0 10px 10px;
+}
+
+.l-header__actions {
+  float: right;
+  padding: 15px 10px 0 0;
+}

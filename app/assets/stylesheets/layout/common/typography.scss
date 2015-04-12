@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,700italic,400italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,600italic,400italic,300italic,700,700italic,800,800italic);
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+strong {
+  font-weight: 700;
+}
+
+em {
+  font-style: italic;
+}
+
+h1, h2 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+a {
+  color: $body-link-colour;
+  text-decoration: none;
+  
+  &:visited {
+    color: $body-link-colour;
+  }
+  
+  &:hover {
+    color: lighten($body-link-colour, 20%);
+  }
+}

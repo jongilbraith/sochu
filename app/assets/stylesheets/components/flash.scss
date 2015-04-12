@@ -1,0 +1,10 @@
+.flash {
+  padding: 10px;
+  font-size: 12px;
+}
+
+.flash--notice {
+  background-color: $flash-notice-background-colour;
+  color: $flash-notice-text-colour;
+  border-color: $flash-notice-border-colour;
+}

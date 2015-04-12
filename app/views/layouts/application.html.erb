@@ -2,16 +2,29 @@
 <html>
 <head>
   <title>Sochu</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="l-header">
+    <div class="l-header__actions header-actions">
+      <% if logged_in? %>
+        Signed in as <%= current_user.name %>.
+        <%= link_to 'Sign out?', signout_path %>
+      <% end %>
+    </div>
 
-<% if flash[:notice] %>
-  <p>Flash: <%= flash[:notice] %></p>
-<% end %>
+    <h1 class="l-header__logo header-logo">
+      Sochu
+    </h1>
+  </div>
 
-<%= yield %>
+  <% if flash[:notice] %>
+    <div class="l-flash flash flash--notice">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
 
+  <%= yield %>
 </body>
 </html>
