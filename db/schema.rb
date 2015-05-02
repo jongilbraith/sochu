@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502113922) do
+ActiveRecord::Schema.define(version: 20150502121308) do
 
   create_table "oauth_logins", force: :cascade do |t|
     t.string   "type",       limit: 255
@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(version: 20150502113922) do
   end
 
   add_index "scheduled_updates", ["user_id"], name: "index_scheduled_updates_on_user_id", using: :btree
+
+  create_table "tweets", force: :cascade do |t|
+    t.integer  "scheduled_update_id", limit: 4
+    t.string   "twitter_id",          limit: 255
+    t.string   "content",             limit: 255
+    t.string   "url",                 limit: 255
+    t.datetime "timestamp"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tweets", ["scheduled_update_id"], name: "index_tweets_on_scheduled_update_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",       limit: 255
