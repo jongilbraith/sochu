@@ -3,6 +3,14 @@ class User < ActiveRecord::Base
 
   has_many :scheduled_updates
 
+  def schedule_update!(content, time)
+    ScheduledUpdate.create! do |update|
+      update.user = self
+      update.content = content
+      update.due_at = time
+    end
+  end
+
   def twitter_client
     @twitter_client ||= Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV['TWITTER_API_KEY']
