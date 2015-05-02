@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+puts "Rails #{Rails.env} environment loaded... checking for waiting updates"
+
+loop do
+  updates = ScheduledUpdate.
+              joins('LEFT JOIN tweets on scheduled_updates.id = tweets.scheduled_update_id').
+              where('tweets.id IS NULL').
+              where('due_at < ?', Time.now)
+
+  updates.each do |update|
+    tweet = update.tweet!
+    puts "Tweet #{tweet.id} created for user #{update.user.name}: #{tweet.content}"
+  end
+
+  sleep 1
+end
