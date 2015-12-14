@@ -1,10 +1,9 @@
+// Import these individually since sequence is of importance
 @import 'layout/common/reset';
 @import 'layout/common/colours';
 @import 'layout/common/typography';
 @import 'layout/common/core_layout';
 
-@import 'layout/page_specific/home';
+@import 'layout/page_specific/*';
 
-@import 'components/flash';
-@import 'components/header_actions';
-@import 'components/header_logo';
+@import 'components/*';
