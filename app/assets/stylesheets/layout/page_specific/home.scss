@@ -1,3 +1,11 @@
 .l-home {
   margin: 10px;
 }
+
+.l-home__scheduled-updates {
+  @include span(3 of 12);
+}
+
+.l-home__tweets {
+  @include span(3 of 12);
+}
