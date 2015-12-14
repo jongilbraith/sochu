@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_one :twitter_login
 
   has_many :scheduled_updates
+  has_many :tweets, through: :scheduled_updates
 
   def schedule_update!(content, time)
     ScheduledUpdate.create! do |update|
