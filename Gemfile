@@ -14,3 +14,12 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
 end
 
+group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'launchy'
+  gem 'rspec-collection_matchers'
+  gem 'rspec-rails'
+end
