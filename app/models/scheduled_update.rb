@@ -6,6 +6,11 @@ class ScheduledUpdate < ActiveRecord::Base
   validates :content, presence: true
   validates :due_at, presence: true
 
+  scope :untweeted, ->{
+    joins('LEFT JOIN tweets on scheduled_updates.id = tweets.scheduled_update_id').
+    where('tweets.id IS NULL')
+  }
+
   def tweet!
     posted_tweet = user.twitter_client.update(content)
 

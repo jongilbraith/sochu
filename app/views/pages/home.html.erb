@@ -1,8 +1,43 @@
 <div class="l-home">
-  <% if logged_in? %>
-    <h2>Hello <%= current_user.name %></h2>
-  <% else %>
-    <h2>Welcome to Sochu</h2>
-    <p><%= link_to 'Sign into your Twitter Account', '/auth/twitter' %> to get started.</p>
-  <% end %>
+  <div class="l-home__scheduled-updates">
+    <% if @scheduled_updates.present? %>
+      <ul>
+        <% @scheduled_updates.each do |update| %>
+          <li class="update-list-item">
+            <div class="update-list-item__metadata">
+              <% if update.due_at > Time.now %>
+                Due in <%= time_ago_in_words(update.due_at) %>
+              <% else %>
+                Due <%= time_ago_in_words(update.due_at) %> ago
+              <% end %>
+            </div>
+            <div class="update-list-item__content">
+              <%= update.content %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No updates scheduled</p>
+    <% end %>
+  </div>
+
+  <div class="l-home__tweets">
+    <% if @tweets.present? %>
+      <ul>
+        <% @tweets.each do |tweet| %>
+          <li class="update-list-item">
+            <div class="update-list-item__metadata">
+              Tweeted <%= tweet.timestamp.to_s(:long) %>
+            </div>
+            <div class="update-list-item__content">
+              <%= link_to tweet.content, tweet.url, target: :blank %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No tweets posted</p>
+    <% end %>
+  </div>
 </div>
