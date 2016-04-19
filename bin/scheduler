@@ -4,9 +4,19 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'envi
 puts "Rails #{Rails.env} environment loaded... checking for waiting updates"
 
 loop do
-  ScheduledUpdate.untweeted.where('due_at < ?', Time.now).each do |update|
-    tweet = update.tweet!
-    puts "Tweet #{tweet.id} created for user #{update.user.name}: #{tweet.content}"
+  Scheduler::Schedule.due_tasks.each do |klass, method_names|
+    method_names.each do |method_name, items|
+      if items.present?
+        print "#{Time.now.strftime('%Y %b %d %k:%M:%S')} - #{klass.to_s}##{method_name}: "
+
+        items.each do |item|
+          item.send(method_name)
+          print "#{item.id} "
+        end
+
+        print "\n"
+      end
+    end
   end
 
   sleep 1
