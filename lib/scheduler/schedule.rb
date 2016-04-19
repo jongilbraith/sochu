@@ -2,36 +2,24 @@ module Scheduler
   module Schedule
     class << self
 
-      def add_task(klass, command, timestamp_column, record_in_column)
-        store << [klass, command, timestamp_column, record_in_column]
+      def add_rule
+        new_rule = Scheduler::Schedule::Rule.new
+
+        yield new_rule
+
+        store << new_rule
       end
 
       def upcoming_tasks
-        store.each_with_object({}) do |(klass, method_name, timestamp_column, record_in_column), memo|
-          memo[klass] ||= {}
-          memo[klass][method_name] = klass.
-                                       where("#{timestamp_column} > ?", Time.now).
-                                       order(timestamp_column => :asc)
-        end
+        store.collect(&:upcoming_tasks).flatten.sort_by(&:due_at)
       end
 
       def performed_tasks
-        store.each_with_object({}) do |(klass, method_name, timestamp_column, record_in_column), memo|
-          memo[klass] ||= {}
-          memo[klass][method_name] = klass.
-                                       where("#{record_in_column} IS NOT NULL").
-                                       order(record_in_column => :desc)
-        end
+        store.collect(&:performed_tasks).flatten.sort_by(&:performed_at)
       end
 
       def due_tasks
-        store.each_with_object({}) do |(klass, method_name, timestamp_column, record_in_column), memo|
-          memo[klass] ||= {}
-          memo[klass][method_name] = klass.
-                                       where("#{record_in_column} IS NULL").
-                                       where("#{timestamp_column} <= ?", Time.now).
-                                       order(timestamp_column => :asc)
-        end
+        store.collect(&:due_tasks).flatten.sort_by(&:due_at)
       end
 
       private
