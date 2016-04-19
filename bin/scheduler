@@ -4,9 +4,10 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'envi
 puts "Rails #{Rails.env} environment loaded... checking for waiting updates"
 
 loop do
-  ScheduledUpdate.untweeted.where('due_at < ?', Time.now).each do |update|
-    tweet = update.tweet!
-    puts "Tweet #{tweet.id} created for user #{update.user.name}: #{tweet.content}"
+  Scheduler::Schedule.due_tasks.each do |task|
+    print "#{Time.now.strftime('%Y %b %d %k:%M:%S')} - #{task.inspect}: "
+    task.perform!
+    puts ' - completed'
   end
 
   sleep 1
