@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20150502121308) do
     t.string   "uid",        limit: 255
     t.string   "token",      limit: 255
     t.string   "secret",     limit: 255
-    t.boolean  "expires",    limit: 1
+    t.boolean  "expires"
     t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
