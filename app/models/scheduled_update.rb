@@ -22,5 +22,7 @@ class ScheduledUpdate < ActiveRecord::Base
       tweet.url = posted_tweet.uri.to_s
       tweet.timestamp = posted_tweet.created_at
     end
+
+    update_attribute(:performed_at, Time.now)
   end
 end

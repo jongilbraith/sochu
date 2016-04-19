@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502121308) do
+ActiveRecord::Schema.define(version: 20160419094636) do
 
   create_table "oauth_logins", force: :cascade do |t|
     t.string   "type",       limit: 255
@@ -26,9 +26,10 @@ ActiveRecord::Schema.define(version: 20150502121308) do
   end
 
   create_table "scheduled_updates", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "content",    limit: 255
+    t.integer  "user_id",      limit: 4
+    t.string   "content",      limit: 255
     t.datetime "due_at"
+    t.datetime "performed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
