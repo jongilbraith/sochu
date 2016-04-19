@@ -1,0 +1,31 @@
+<div class="l-schedule">
+  <div class="l-schedule__tasks">
+    <ul>
+      <% @performed_tasks.each do |task| %>
+        <li class="update-list-item">
+          <div class="update-list-item__metadata">
+            <%= task.due_at.to_s(:short) %> - <%= task.record.class.to_s.underscore.humanize %>
+          </div>
+          <div class="update-list-item__content">
+            <%= task.record.content %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="l-schedule__tasks">
+    <ul>
+      <% @upcoming_tasks.each do |task| %>
+        <li class="update-list-item">
+          <div class="update-list-item__metadata">
+            <%= task.due_at.to_s(:short) %> - <%= task.record.class.to_s.underscore.humanize %>
+          </div>
+          <div class="update-list-item__content">
+            <%= task.record.content %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

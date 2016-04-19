@@ -1,0 +1,7 @@
+.l-schedule {
+  margin: 10px;
+}
+
+.l-schedule__tasks {
+  @include span(3 of 12);
+}
