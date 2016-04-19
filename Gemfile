@@ -21,5 +21,5 @@ group :test do
   gem 'faker'
   gem 'launchy'
   gem 'rspec-collection_matchers'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.0'
 end
