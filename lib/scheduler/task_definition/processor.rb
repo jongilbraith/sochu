@@ -1,17 +1,23 @@
 module Scheduler
-  module Schedule
-    class Rule
+  class TaskDefinition
+    class Processor
 
       DUE_AT_COLUMN = :due_at
       PERFORMED_AT_COLUMN = :performed_at
 
-      attr_accessor :klass, :method_name
+      attr_accessor :definition
+
+      def initialize(task_definition)
+        @definition = task_definition
+      end
 
       def upcoming_tasks
         upcoming_task_records.collect do |record|
           Scheduler::Schedule::Task.new.tap do |task|
-            task.rule = self
+            task.method_name = definition.method_name
             task.record = record
+            task.due_at = record.send(DUE_AT_COLUMN)
+            task.performed_at = record.send(PERFORMED_AT_COLUMN)
           end
         end
       end
@@ -19,8 +25,10 @@ module Scheduler
       def performed_tasks
         performed_task_records.collect do |record|
           Scheduler::Schedule::Task.new.tap do |task|
-            task.rule = self
+            task.method_name = definition.method_name
             task.record = record
+            task.due_at = record.send(DUE_AT_COLUMN)
+            task.performed_at = record.send(PERFORMED_AT_COLUMN)
           end
         end
       end
@@ -28,8 +36,10 @@ module Scheduler
       def due_tasks
         due_task_records.collect do |record|
           Scheduler::Schedule::Task.new.tap do |task|
-            task.rule = self
+            task.method_name = definition.method_name
             task.record = record
+            task.due_at = record.send(DUE_AT_COLUMN)
+            task.performed_at = record.send(PERFORMED_AT_COLUMN)
           end
         end
       end
@@ -37,15 +47,16 @@ module Scheduler
       private
 
       def upcoming_task_records
-        klass.where("#{DUE_AT_COLUMN} > ?", Time.now)
+        definition.klass.where("#{DUE_AT_COLUMN} > ?", Time.now)
       end
 
       def performed_task_records
-        klass.where("#{PERFORMED_AT_COLUMN} IS NOT NULL")
+        definition.klass.where("#{PERFORMED_AT_COLUMN} IS NOT NULL")
       end
 
       def due_task_records
-        klass.
+        definition.
+          klass.
           where("#{PERFORMED_AT_COLUMN} IS NULL").
           where("#{DUE_AT_COLUMN} <= ?", Time.now)
       end

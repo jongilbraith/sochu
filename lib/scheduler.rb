@@ -1,10 +1,11 @@
+require_relative 'scheduler/brain'
 require_relative 'scheduler/schedule'
 require_relative 'scheduler/adapter'
 
 module Scheduler
 end
 
-# Ensure all models are loaded so as to pull in any rules
+# Ensure all models are loaded so as to pull in any task definitions
 if !Rails.configuration.eager_load
   Rails.root.join('app', 'models').each_child do |child|
     require child if (child.file? && child.fnmatch?('*.rb'))
