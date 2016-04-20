@@ -7,35 +7,6 @@ module Scheduler
 
       attr_accessor :klass, :method_name
 
-      def upcoming_tasks
-        upcoming_task_records.collect do |record|
-          Scheduler::Schedule::Task.new.tap do |task|
-            task.rule = self
-            task.record = record
-          end
-        end
-      end
-
-      def performed_tasks
-        performed_task_records.collect do |record|
-          Scheduler::Schedule::Task.new.tap do |task|
-            task.rule = self
-            task.record = record
-          end
-        end
-      end
-
-      def due_tasks
-        due_task_records.collect do |record|
-          Scheduler::Schedule::Task.new.tap do |task|
-            task.rule = self
-            task.record = record
-          end
-        end
-      end
-
-      private
-
       def upcoming_task_records
         klass.where("#{DUE_AT_COLUMN} > ?", Time.now)
       end
