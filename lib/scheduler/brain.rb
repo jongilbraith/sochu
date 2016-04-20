@@ -2,23 +2,23 @@ module Scheduler
   module Brain
     class << self
 
-      def add_rule
-        new_rule = Scheduler::Schedule::Rule.new
+      def add_task_definition
+        new_task_definition = Scheduler::TaskDefinition.new
 
-        yield new_rule
+        yield new_task_definition
 
-        rules << new_rule
+        task_definitions << new_task_definition
       end
 
-      def rules
-        @rules ||= []
+      def task_definitions
+        @task_definitions ||= []
       end
 
       def upcoming_tasks
-        rules.collect do |rule|
-          rule.upcoming_task_records.collect do |record|
+        task_definitions.collect do |definition|
+          TaskDefinition::Processor.new(definition).upcoming_task_records.collect do |record|
             Scheduler::Schedule::Task.new.tap do |task|
-              task.rule = rule
+              task.method_name = definition.method_name
               task.record = record
             end
           end
@@ -26,10 +26,10 @@ module Scheduler
       end
 
       def performed_tasks
-        rules.collect do |rule|
-          rule.performed_task_records.collect do |record|
+        task_definitions.collect do |definition|
+          TaskDefinition::Processor.new(definition).performed_task_records.collect do |record|
             Scheduler::Schedule::Task.new.tap do |task|
-              task.rule = rule
+              task.method_name = definition.method_name
               task.record = record
             end
           end
@@ -37,10 +37,10 @@ module Scheduler
       end
 
       def due_tasks
-        rules.collect do |rule|
-          rule.due_task_records.collect do |record|
+        task_definitions.collect do |definition|
+          TaskDefinition::Processor.new(definition).due_task_records.collect do |record|
             Scheduler::Schedule::Task.new.tap do |task|
-              task.rule = rule
+              task.method_name = definition.method_name
               task.record = record
             end
           end
