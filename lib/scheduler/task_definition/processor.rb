@@ -46,19 +46,20 @@ module Scheduler
 
       private
 
+      def records
+        definition.klass
+      end
+
       def upcoming_task_records
-        definition.klass.where("#{DUE_AT_COLUMN} > ?", Time.now)
+        records.where("#{DUE_AT_COLUMN} > ?", Time.now)
       end
 
       def performed_task_records
-        definition.klass.where("#{PERFORMED_AT_COLUMN} IS NOT NULL")
+        records.where("#{PERFORMED_AT_COLUMN} IS NOT NULL")
       end
 
       def due_task_records
-        definition.
-          klass.
-          where("#{PERFORMED_AT_COLUMN} IS NULL").
-          where("#{DUE_AT_COLUMN} <= ?", Time.now)
+        records.where("#{PERFORMED_AT_COLUMN} IS NULL AND #{DUE_AT_COLUMN} <= ?", Time.now)
       end
 
     end
