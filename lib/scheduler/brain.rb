@@ -20,6 +20,8 @@ module Scheduler
             Scheduler::Schedule::Task.new.tap do |task|
               task.method_name = definition.method_name
               task.record = record
+              task.due_at = record.send(TaskDefinition::Processor::DUE_AT_COLUMN)
+              task.performed_at = record.send(TaskDefinition::Processor::PERFORMED_AT_COLUMN)
             end
           end
         end.flatten
@@ -31,6 +33,8 @@ module Scheduler
             Scheduler::Schedule::Task.new.tap do |task|
               task.method_name = definition.method_name
               task.record = record
+              task.due_at = record.send(TaskDefinition::Processor::DUE_AT_COLUMN)
+              task.performed_at = record.send(TaskDefinition::Processor::PERFORMED_AT_COLUMN)
             end
           end
         end.flatten
@@ -42,6 +46,8 @@ module Scheduler
             Scheduler::Schedule::Task.new.tap do |task|
               task.method_name = definition.method_name
               task.record = record
+              task.due_at = record.send(TaskDefinition::Processor::DUE_AT_COLUMN)
+              task.performed_at = record.send(TaskDefinition::Processor::PERFORMED_AT_COLUMN)
             end
           end
         end.flatten
