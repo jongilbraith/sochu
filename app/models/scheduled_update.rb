@@ -2,7 +2,7 @@ class ScheduledUpdate < ActiveRecord::Base
 
   include Scheduler::Adapter
 
-  scheduler :tweet!
+  schedule :tweet!
 
   belongs_to :user
   has_one :tweet

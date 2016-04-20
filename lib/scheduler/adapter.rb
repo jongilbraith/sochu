@@ -4,7 +4,7 @@ module Scheduler
     extend ActiveSupport::Concern
 
     class_methods do
-      def scheduler(method_name)
+      def schedule(method_name)
         Scheduler::Schedule.add_rule do |rule|
           rule.klass = self
           rule.method_name = method_name
