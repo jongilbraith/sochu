@@ -5,11 +5,11 @@ module Scheduler
       attr_accessor :rule, :record
 
       def due_at
-        record.send(rule.due_at_column)
+        record.send(Scheduler::Schedule::Rule::DUE_AT_COLUMN)
       end
 
       def performed_at
-        record.send(rule.performed_at_column)
+        record.send(Scheduler::Schedule::Rule::PERFORMED_AT_COLUMN)
       end
 
       def perform!

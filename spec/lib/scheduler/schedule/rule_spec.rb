@@ -6,8 +6,6 @@ RSpec.describe Scheduler::Schedule::Rule do
     described_class.new.tap do |new_rule|
       new_rule.klass = ScheduledUpdate
       new_rule.method_name = :_
-      new_rule.due_at_column = :due_at
-      new_rule.performed_at_column = :performed_at
     end
   end
 

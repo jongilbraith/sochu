@@ -2,9 +2,10 @@ module Scheduler
   module Schedule
     class Rule
 
-      attr_accessor :klass, :method_name
+      DUE_AT_COLUMN = :due_at
+      PERFORMED_AT_COLUMN = :performed_at
 
-      attr_accessor :due_at_column, :performed_at_column
+      attr_accessor :klass, :method_name
 
       def upcoming_tasks
         upcoming_task_records.collect do |record|
@@ -36,17 +37,17 @@ module Scheduler
       private
 
       def upcoming_task_records
-        klass.where("#{due_at_column} > ?", Time.now)
+        klass.where("#{DUE_AT_COLUMN} > ?", Time.now)
       end
 
       def performed_task_records
-        klass.where("#{performed_at_column} IS NOT NULL")
+        klass.where("#{PERFORMED_AT_COLUMN} IS NOT NULL")
       end
 
       def due_task_records
         klass.
-          where("#{performed_at_column} IS NULL").
-          where("#{due_at_column} <= ?", Time.now)
+          where("#{PERFORMED_AT_COLUMN} IS NULL").
+          where("#{DUE_AT_COLUMN} <= ?", Time.now)
       end
 
     end
