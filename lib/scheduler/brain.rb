@@ -16,7 +16,7 @@ module Scheduler
 
       def upcoming_tasks
         task_definitions.collect do |definition|
-          TaskDefinition::Processor.new(definition).upcoming_task_records.collect do |record|
+          definition.processor.upcoming_task_records.collect do |record|
             Scheduler::Schedule::Task.new.tap do |task|
               task.method_name = definition.method_name
               task.record = record
@@ -29,7 +29,7 @@ module Scheduler
 
       def performed_tasks
         task_definitions.collect do |definition|
-          TaskDefinition::Processor.new(definition).performed_task_records.collect do |record|
+          definition.processor.performed_task_records.collect do |record|
             Scheduler::Schedule::Task.new.tap do |task|
               task.method_name = definition.method_name
               task.record = record
@@ -42,7 +42,7 @@ module Scheduler
 
       def due_tasks
         task_definitions.collect do |definition|
-          TaskDefinition::Processor.new(definition).due_task_records.collect do |record|
+          definition.processor.due_task_records.collect do |record|
             Scheduler::Schedule::Task.new.tap do |task|
               task.method_name = definition.method_name
               task.record = record
