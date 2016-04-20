@@ -15,42 +15,15 @@ module Scheduler
       end
 
       def upcoming_tasks
-        task_definitions.collect do |definition|
-          definition.processor.upcoming_task_records.collect do |record|
-            Scheduler::Schedule::Task.new.tap do |task|
-              task.method_name = definition.method_name
-              task.record = record
-              task.due_at = record.send(TaskDefinition::Processor::DUE_AT_COLUMN)
-              task.performed_at = record.send(TaskDefinition::Processor::PERFORMED_AT_COLUMN)
-            end
-          end
-        end.flatten
+        task_definitions.collect(&:processor).collect(&:upcoming_tasks).flatten
       end
 
       def performed_tasks
-        task_definitions.collect do |definition|
-          definition.processor.performed_task_records.collect do |record|
-            Scheduler::Schedule::Task.new.tap do |task|
-              task.method_name = definition.method_name
-              task.record = record
-              task.due_at = record.send(TaskDefinition::Processor::DUE_AT_COLUMN)
-              task.performed_at = record.send(TaskDefinition::Processor::PERFORMED_AT_COLUMN)
-            end
-          end
-        end.flatten
+        task_definitions.collect(&:processor).collect(&:performed_tasks).flatten
       end
 
       def due_tasks
-        task_definitions.collect do |definition|
-          definition.processor.due_task_records.collect do |record|
-            Scheduler::Schedule::Task.new.tap do |task|
-              task.method_name = definition.method_name
-              task.record = record
-              task.due_at = record.send(TaskDefinition::Processor::DUE_AT_COLUMN)
-              task.performed_at = record.send(TaskDefinition::Processor::PERFORMED_AT_COLUMN)
-            end
-          end
-        end.flatten
+        task_definitions.collect(&:processor).collect(&:due_tasks).flatten
       end
 
     end

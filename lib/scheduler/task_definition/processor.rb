@@ -11,6 +11,41 @@ module Scheduler
         @definition = task_definition
       end
 
+      def upcoming_tasks
+        upcoming_task_records.collect do |record|
+          Scheduler::Schedule::Task.new.tap do |task|
+            task.method_name = definition.method_name
+            task.record = record
+            task.due_at = record.send(DUE_AT_COLUMN)
+            task.performed_at = record.send(PERFORMED_AT_COLUMN)
+          end
+        end
+      end
+
+      def performed_tasks
+        performed_task_records.collect do |record|
+          Scheduler::Schedule::Task.new.tap do |task|
+            task.method_name = definition.method_name
+            task.record = record
+            task.due_at = record.send(DUE_AT_COLUMN)
+            task.performed_at = record.send(PERFORMED_AT_COLUMN)
+          end
+        end
+      end
+
+      def due_tasks
+        due_task_records.collect do |record|
+          Scheduler::Schedule::Task.new.tap do |task|
+            task.method_name = definition.method_name
+            task.record = record
+            task.due_at = record.send(DUE_AT_COLUMN)
+            task.performed_at = record.send(PERFORMED_AT_COLUMN)
+          end
+        end
+      end
+
+      private
+
       def upcoming_task_records
         definition.klass.where("#{DUE_AT_COLUMN} > ?", Time.now)
       end
