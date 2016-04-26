@@ -10,8 +10,8 @@ class PagesController < ApplicationController
   end
 
   def schedule
-    @upcoming_tasks = Scheduler::Schedule.upcoming_tasks
-    @performed_tasks = Scheduler::Schedule.performed_tasks.reverse
+    @upcoming_tasks = Scheduler::Schedule.new.upcoming_tasks
+    @performed_tasks = Scheduler::Schedule.new.performed_tasks.reverse
   end
 
 end

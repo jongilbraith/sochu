@@ -1,31 +1,23 @@
 module Scheduler
-  module Brain
-    class << self
+  class Brain
 
-      def add_task_definition
-        new_task_definition = Scheduler::TaskDefinition.new
+    attr_accessor :schedule
 
-        yield new_task_definition
-
-        task_definitions << new_task_definition
-      end
-
-      def task_definitions
-        @task_definitions ||= []
-      end
-
-      def upcoming_tasks
-        task_definitions.collect(&:processor).collect(&:upcoming_tasks).flatten
-      end
-
-      def performed_tasks
-        task_definitions.collect(&:processor).collect(&:performed_tasks).flatten
-      end
-
-      def due_tasks
-        task_definitions.collect(&:processor).collect(&:due_tasks).flatten
-      end
-
+    def initialize(schedule)
+      @schedule = schedule
     end
+
+    def upcoming_tasks
+      schedule.task_definitions.collect(&:processor).collect(&:upcoming_tasks).flatten
+    end
+
+    def performed_tasks
+      schedule.task_definitions.collect(&:processor).collect(&:performed_tasks).flatten
+    end
+
+    def due_tasks
+      schedule.task_definitions.collect(&:processor).collect(&:due_tasks).flatten
+    end
+
   end
 end

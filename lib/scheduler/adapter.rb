@@ -5,10 +5,14 @@ module Scheduler
 
     class_methods do
       def schedule(method_name)
-        Scheduler::Brain.add_task_definition do |definition|
+        task_definitions << Scheduler::TaskDefinition.new.tap do |definition|
           definition.klass = self
           definition.method_name = method_name
         end
+      end
+
+      def task_definitions
+        @task_definitions ||= []
       end
     end
 

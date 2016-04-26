@@ -1,5 +1,5 @@
 module Scheduler
-  module Schedule
+  class Schedule
     class Task
 
       attr_accessor :method_name, :record
