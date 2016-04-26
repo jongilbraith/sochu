@@ -4,7 +4,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'envi
 puts "Rails #{Rails.env} environment loaded... checking for waiting updates"
 
 loop do
-  Scheduler::Schedule.new.due_tasks.each do |task|
+  Scheduler::Schedule.new(1.hour.ago, 10.minutes.from_now).due_tasks.each do |task|
     print "#{Time.now.strftime('%Y %b %d %k:%M:%S')} - #{task.inspect}: "
     task.perform!
     puts ' - completed'

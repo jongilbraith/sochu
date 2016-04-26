@@ -8,6 +8,9 @@ module Scheduler
 
       def perform!
         record.send(method_name)
+
+        # Ideally should be set from the timestamp on the record
+        performed_at = Time.now
       end
 
     end
