@@ -3,12 +3,24 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
 puts "Rails #{Rails.env} environment loaded... checking for waiting updates"
 
+RELOAD_PERIOD = 30
+timer = 0
+schedule = nil
+
 loop do
-  Scheduler::Schedule.new(1.hour.ago, 10.minutes.from_now).due_tasks.each do |task|
+  if schedule.nil? || timer > RELOAD_PERIOD
+    timer = 0
+    puts "#{Time.now.strftime('%Y %b %d %k:%M:%S')} - (Re)loading schedule..."
+    schedule = Scheduler::Schedule.new(1.hour.ago, 10.minutes.from_now)
+  end
+
+  schedule.due_tasks.each do |task|
     print "#{Time.now.strftime('%Y %b %d %k:%M:%S')} - #{task.inspect}: "
     task.perform!
     puts ' - completed'
   end
 
   sleep 1
+
+  timer += 1
 end
