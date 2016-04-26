@@ -2,16 +2,18 @@ module Scheduler
   class Schedule
 
     def upcoming_tasks
-      brain.upcoming_tasks.sort_by(&:due_at)
+      task_definitions.collect(&:processor).collect(&:upcoming_tasks).flatten.sort_by(&:due_at)
     end
 
     def performed_tasks
-      brain.performed_tasks.sort_by(&:performed_at)
+      task_definitions.collect(&:processor).collect(&:performed_tasks).flatten.sort_by(&:performed_at)
     end
 
     def due_tasks
-      brain.due_tasks.sort_by(&:due_at)
+      task_definitions.collect(&:processor).collect(&:due_tasks).flatten.sort_by(&:due_at)
     end
+
+    private
 
     def task_definitions
       @task_definitions ||= ActiveRecord::Base.
@@ -19,12 +21,6 @@ module Scheduler
                               collect { |k| k.try(:task_definitions) }.
                               flatten.
                               compact
-    end
-
-    private
-
-    def brain
-      @brain ||= Scheduler::Brain.new(self)
     end
 
   end
